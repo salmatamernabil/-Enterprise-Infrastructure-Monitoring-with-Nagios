@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
       v.vmx["numvcpus"] = "1"
     end
 
-    db01.vm.provision "shell", path: "scripts/db01.sh"
+    #db01.vm.provision "shell", path: "scripts/db01.sh"
   end
 
   config.vm.define "mc01" do |mc01|
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
       v.vmx["numvcpus"] = "1"
     end
 
-    mc01.vm.provision "shell", path: "scripts/mc01.sh"
+    #mc01.vm.provision "shell", path: "scripts/mc01.sh"
   end
 
   config.vm.define "rmq01" do |rmq01|
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
       v.vmx["numvcpus"] = "1"
     end
 
-    rmq01.vm.provision "shell", path: "scripts/rmq01.sh"
+    #rmq01.vm.provision "shell", path: "scripts/rmq01.sh"
   end
 
   config.vm.define "app01" do |app01|
@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
       v.vmx["numvcpus"] = "2"
     end
 
-    app01.vm.provision "shell", path: "scripts/app01.sh"
+    #app01.vm.provision "shell", path: "scripts/app01.sh"
   end
 
   config.vm.define "web01" do |web01|
@@ -79,8 +79,33 @@ Vagrant.configure("2") do |config|
       v.vmx["numvcpus"] = "1"
     end
 
-    web01.vm.provision "shell", path: "scripts/web01.sh"
+    #web01.vm.provision "shell", path: "scripts/web01.sh"
     
 
   end
+# Zabbix Monitoring Server
+config.vm.define "zabbix" do |zabbix|
+  zabbix.vm.box = "generic/centos9s"
+  zabbix.vm.hostname = "zabbix"
+
+  zabbix.vm.network "private_network", ip: "192.168.56.16"
+
+  zabbix.vm.provider "vmware_desktop" do |v|
+    v.memory = 1024
+    v.cpus = 1
+  end
+end
+
+# Nagios Monitoring Server
+config.vm.define "nagios" do |nagios|
+  nagios.vm.box = "generic/centos9s"
+  nagios.vm.hostname = "nagios"
+
+  nagios.vm.network "private_network", ip: "192.168.56.17"
+
+  nagios.vm.provider "vmware_desktop" do |v|
+    v.memory = 1024
+    v.cpus = 1
+  end
+end
 end
